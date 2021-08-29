@@ -1,5 +1,6 @@
 import praw
-import config
+from config import config
+from src import BERT_Model as bert
 
 equity_subreddits = 'wallstreetbets'
 crypto_subreddits = 'SatoshiStreetBets'
@@ -39,11 +40,16 @@ for submission in hot_crypto:
 
 for comments in crypto_subreddit.stream.comments():
     print("Submission: Title: " + comments.link_title)
+    print("Submission: Title: " + bert.get_sentiment(comments.link_title) )
     print("Score: " + str(comments.score))
     print("Comment: " + comments.body)
+    print("Comment: " + bert.get_sentiment(comments.body))
 
 '''Reddit Config
 https://www.youtube.com/watch?v=qCB8MZ-W1Ig&ab_channel=EatTheBlocks
+for equity: https://github.com/jklepatch/eattheblocks/blob/master/screencast/290-wallstreetbets-sentiment-analysis/reddit-sentiment-analysis.py
+for crypro: https://github.com/jklepatch/eattheblocks/blob/master/screencast/294-cryptocurrency-sentiment-analysis/reddit-sentiment-analysis.py
+
 subs = ['wallstreetbets', 'SatoshiStreetBets']
 post_flairs = {'Daily Discussion','Weekend Discussion','Discussion'} # find more like news etc
 goodUser = {'AutoModerator'} # users who can comment more than once
