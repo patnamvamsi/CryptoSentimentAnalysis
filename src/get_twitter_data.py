@@ -33,7 +33,6 @@ def get_text_search_tweets(query,count):
         tweets_list = [[tweet.created_at, tweet.id, tweet.text] for tweet in tweets]
         tweets_df = pd.DataFrame(tweets_list)
         print(tweets_df.to_csv())
-        #print ([tweet] for tweet in tweets)
     except BaseException as e:
         print('failed on_status,', str(e))
 
