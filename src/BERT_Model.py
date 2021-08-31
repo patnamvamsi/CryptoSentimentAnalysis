@@ -23,7 +23,7 @@ def get_sentiment(text):
 
 
 def test_case():
-    #print(tf.test.gpu_device_name())
+    print(tf.test.gpu_device_name())
     text = 'Bitcoin ATM operators set up association to counter money laundering. This will increase the bitcoin value further'
     print(get_sentiment(text))
 
