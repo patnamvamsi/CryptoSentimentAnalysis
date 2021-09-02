@@ -1,9 +1,6 @@
 from transformers import pipeline
 import tensorflow as tf
 
-
-
-
 '''
 model='huggingface/distilbert-base-uncased-finetuned-mnli' 
 Tensorflow based.
