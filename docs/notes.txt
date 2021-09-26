@@ -1,0 +1,15 @@
+1 build app to download historical tweets based on:
+    twitter handles
+    hastag searches
+
+Analyse existing tweets and map to price jumps.
+
+once  a relation is derived, predict next movement .
+
+
+
+
+2. build app to download historical reddits based for:
+    past x days from wall street bets and satoshi bets
+
+
