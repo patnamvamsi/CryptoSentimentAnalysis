@@ -1,5 +1,5 @@
 import praw
-from config import config
+from src.config import config
 from src import BERT_Model as bert
 
 equity_subreddits = 'wallstreetbets'

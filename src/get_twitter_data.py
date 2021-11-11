@@ -1,9 +1,8 @@
 import json
 
 import tweepy
-from config import config
+from src.config import config
 import pandas as pd
-from src import BERT_Model as bert
 
 consumer_key = config.TWITTER_API_KEY
 consumer_secret = config.TWITTER_SECRET_KEY

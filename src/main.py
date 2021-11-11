@@ -18,6 +18,13 @@ async def get_tweets():
 async def analyse_tweet_sentiments():
     return await get_twitter_data.test_case()
 
+@app.get("/getProcessedSentiment")
+async def get_processed_sentiment():
+    return ()
+
+
+
+'''
 #https://stackoverflow.com/questions/64901945/how-to-send-a-progress-of-operation-in-a-fastapi-app
 
 context = {'jobs': {}}
@@ -60,3 +67,4 @@ async def status(identifier):
     return {
         "status": context['jobs'].get(identifier, 'job with that identifier is undefined'),
     }
+'''
