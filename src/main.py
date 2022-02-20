@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from src import get_twitter_data
+from src import get_processed_data
+import extract_tweet_sentiment as es
 import asyncio
 import uuid
-
 
 app = FastAPI()
 
@@ -10,18 +11,23 @@ app = FastAPI()
 def read_root():
     return ("Welcome to Crypto Sentiment Analytics")
 
-@app.get("/getTweets")
-async def get_tweets():
-    return ("getting Tweets")
+@app.get("/getTweets/{twitter_handle}")
+async def get_tweets(twitter_handle: str):
+    count = get_twitter_data.get_all_user_tweets(twitter_handle)
+    return (str(count) + " Tweets fetched successfully")
+    #http://127.0.0.1:8004/getTweets/OneDevloperArmy
 
-@app.get("/analyseTweetSentiments")
-async def analyse_tweet_sentiments():
-    return await get_twitter_data.test_case()
 
-@app.get("/getProcessedSentiment")
-async def get_processed_sentiment():
-    return ()
+@app.get("/analyseTweetSentiments/{twitter_handle}")
+async def analyse_tweet_sentiments(twitter_handle: str):
+    return es.extract_sentiment(twitter_handle+'.json')
+    #http://127.0.0.1:8004/analyseTweetSentiments/OneDevloperArmy
 
+
+@app.get("/getProcessedSentiment/{twitter_handle}")
+async def get_processed_sentiment(twitter_handle: str):
+    return get_processed_data.get_processed_sentiment(twitter_handle)
+    #http://127.0.0.1:8004/getProcessedSentiment/OneDevloperArmy
 
 
 '''

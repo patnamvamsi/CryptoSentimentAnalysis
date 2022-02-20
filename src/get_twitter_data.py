@@ -1,8 +1,8 @@
 import json
-
 import tweepy
 from src.config import config
 import pandas as pd
+
 
 consumer_key = config.TWITTER_API_KEY
 consumer_secret = config.TWITTER_SECRET_KEY
@@ -24,16 +24,17 @@ def get_user_tweets(username, count):
     except BaseException as e:
         print('failed on_status,', str(e))
 
-def _get_all_user_tweets(userid):
+def get_all_user_tweets(userid):
+
     tweets = []
     for tweet in tweepy.Cursor(api.user_timeline,tweet_mode='extended', id=userid).items():
         tweets.append(tweet._json)
         print(tweet._json)
 
-    with open('C:\\Dev\\Projects\\CryptoSentimentAnalysis\\data\\input\\' + userid + '.json', 'w') as f:
+    with open(config.input_data + userid + '.json', 'w') as f:
         json.dump(tweets, f)
 
-    return tweets.count()
+    return tweets.__len__()
 
 def get_text_search_tweets(query,count):
 
@@ -51,7 +52,7 @@ def get_text_search_tweets(query,count):
 
 def test_case():
     #_get_all_user_tweets('intocryptoverse')
-    tweet_count = _get_all_user_tweets('ThinkingCrypto1')
+    tweet_count = get_all_user_tweets('ThinkingCrypto1')
     #_get_all_user_tweets('aantonop')
     '''
     tweets = get_user_tweets('intocryptoverse', 10)
