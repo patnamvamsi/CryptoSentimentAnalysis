@@ -1,6 +1,5 @@
 import praw
-from src.config import config
-from src import BERT_Model as bert
+from config import config
 
 equity_subreddits = 'wallstreetbets'
 crypto_subreddits = 'SatoshiStreetBets'
@@ -40,10 +39,10 @@ for submission in hot_crypto:
 
 for comments in crypto_subreddit.stream.comments():
     print("Submission: Title: " + comments.link_title)
-    print("Submission: Title: " + bert.get_sentiment(comments.link_title) )
+    #print("Submission: Title: " + bert.get_sentiment(comments.link_title) )
     print("Score: " + str(comments.score))
     print("Comment: " + comments.body)
-    print("Comment: " + bert.get_sentiment(comments.body))
+    #print("Comment: " + bert.get_sentiment(comments.body))
 
 '''Reddit Config
 https://www.youtube.com/watch?v=qCB8MZ-W1Ig&ab_channel=EatTheBlocks

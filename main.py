@@ -1,9 +1,7 @@
 from fastapi import FastAPI
-from src import get_twitter_data
-from src import get_processed_data
+from crawlers import get_twitter_data
+import get_processed_data
 import extract_tweet_sentiment as es
-import asyncio
-import uuid
 
 app = FastAPI()
 

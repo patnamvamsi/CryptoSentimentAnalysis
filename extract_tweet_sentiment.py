@@ -3,10 +3,8 @@ import json
 import glob
 import pandas as pd
 from collections import OrderedDict
-from src.BERT_Model import get_financial_sentiment
-from src.config import config
-
-import time
+from BERT_Model import get_financial_sentiment
+from config import config
 
 input_dir = config.input_data
 output_dir = config.output_data

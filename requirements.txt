@@ -4,3 +4,4 @@ TensorFlow
 tweepy
 FastAPI
 torch
+sqlalchemy

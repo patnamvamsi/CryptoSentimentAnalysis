@@ -1,8 +1,5 @@
 from transformers import pipeline
-import torch
-import tensorflow as tf
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from config import config as cfg
+
 '''
 model='huggingface/distilbert-base-uncased-finetuned-mnli' 
 Tensorflow based.
