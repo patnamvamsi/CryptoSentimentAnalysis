@@ -1,6 +1,4 @@
-import json
 from datetime import datetime
-
 import sqlalchemy
 import tweepy
 from config import config
@@ -17,10 +15,10 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth,wait_on_rate_limit=True)
 
+
 def get_user_tweets(username, count):
 
     try:
-
         tweets = tweepy.Cursor(api.user_timeline,tweet_mode='extended', id=username).items(count)
         tweets_list = [[tweet.created_at, tweet.id, tweet.text] for tweet in tweets]
         tweets_df = pd.DataFrame(tweets_list)
@@ -30,20 +28,16 @@ def get_user_tweets(username, count):
 
 
 def get_all_user_tweets(userid, since):
-    print(since)
+
     tweets = []
     for tweet in tweepy.Cursor(api.user_timeline, since_id=since, tweet_mode='extended', id=userid).items():
-
         tweets.append([datetime.strftime(datetime.strptime(tweet._json['created_at'], '%a %b %d %H:%M:%S +0000 %Y'),
-                                         '%Y-%m-%d %H:%M:%S'),
-                      userid, 'twitter', tweet._json])
+                                         '%Y-%m-%d %H:%M:%S'), userid, 'twitter', tweet._json])
         print(tweet._json)
 
-    tweets_df = pd.DataFrame(tweets, columns=['timeline', 'handle', 'source', 'raw_message']) # ,'raw_message_text','status'
-
+    tweets_df = pd.DataFrame(tweets, columns=['timeline', 'handle', 'source', 'raw_message'])
     conn = db.create_sqlalchemy_engine_conn()
-
-    tweets_df.to_sql('raw_messages', conn, if_exists='append', index=False, dtype = {'raw_message': sqlalchemy.types.JSON} )
+    tweets_df.to_sql('raw_messages', conn, if_exists='append', index=False, dtype={'raw_message': sqlalchemy.types.JSON})
 
     """ Write to a file
     with open(config.input_data + userid + '.json', 'w') as f:
@@ -76,17 +70,46 @@ def get_last_updated_tweets():
     print(last_updated_tweet)
     return last_updated_tweet
 
+
 def update_db_with_latest_tweets():
 
     df = get_last_updated_tweets()
     for index, row in df.iterrows():
         get_all_user_tweets(row['handle'],  row['since_id'])
-        print(row['handle'], row['since_id'] )
+        update_crawler_control_status(row['handle'])
+
+
+def get_new_handles():
+
+    conn = db.create_sqlalchemy_engine_conn()
+    query = 'select handle  from crawler_control where source = \'twitter\' and status = \'NEW\''
+    new_handles = pd.read_sql(query, conn)
+    print(new_handles)
+    return new_handles
+
+
+def update_db_with_new_handle_tweets():
+
+    df = get_new_handles()
+    for index, row in df.iterrows():
+        get_all_user_tweets(row['handle'], 1)
+        update_crawler_control_status(row['handle'])
+
+
+def update_crawler_control_status(handle):
+
+    conn = db.create_sqlalchemy_engine_conn()
+    query = 'update crawler_control set status = \'PROCESSED\' , last_update = \' ' +\
+            datetime.now().strftime('%Y-%m-%d %H:%M:%S') + '\'  where   handle in (\'' + str(handle) + '\')'
+    print (datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    conn.execute(query)
 
 
 def test_case():
 
-    print("Causes dupicates -- careful")
+    print("Causes duplicates -- careful")
+    update_db_with_latest_tweets()
+    update_db_with_new_handle_tweets()
     #tweet_count = get_all_user_tweets('ThinkingCrypto1', 1)
     #print("tweets processed: " + str(tweet_count))
 
@@ -99,8 +122,8 @@ def test_case():
 
 
 if __name__ == "__main__":
-    #test_case()
-    update_db_with_latest_tweets()
+    test_case()
+    #update_db_with_latest_tweets()
 
 ''''
 open issues: 
@@ -120,4 +143,10 @@ https://twitter.com/aantonop
 analysing  in pandas
 https://www.kdnuggets.com/2017/03/beginners-guide-tweet-analytics-pandas.html
 
+'''
+
+'''
+TODO
+
+fetch list of handles from crawler_control based on priority and then start fetching tweets
 '''

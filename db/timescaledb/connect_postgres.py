@@ -13,4 +13,4 @@ def create_sqlalchemy_engine_conn():
 if __name__ == '__main__':
     conn = create_sqlalchemy_engine_conn()
     print('Successfully connected to TimescaleDB')
-    print (conn.name)
+    print(conn.name)

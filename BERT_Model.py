@@ -1,4 +1,5 @@
 from transformers import pipeline
+from config import config as cfg
 
 '''
 model='huggingface/distilbert-base-uncased-finetuned-mnli' 
@@ -21,7 +22,7 @@ def get_sentiment(text):
 def get_financial_sentiment(text):
     #finBert: https://huggingface.co/ProsusAI/finbert
     #classifier = pipeline('sentiment-analysis', model='ProsusAI/finbert')
-    classifier = pipeline('sentiment-analysis', model='../models/sentiment/finBERT/')#, device =0
+    classifier = pipeline('sentiment-analysis', model=cfg.model_path)#, device =0
     return (classifier(text))
 
 def test_case():
@@ -29,7 +30,7 @@ def test_case():
     text1 = 'Bitcoin ATM operators set up association to counter money laundering. This will increase the bitcoin value further'
     text2 = '@mcuban Mark, lets chat about crypto, dallas mavs, and shark tank in an interview?'
     #print(get_sentiment([text1,text2]))
-    print(get_financial_sentiment([text1,text2]))
+    print(get_financial_sentiment([text1, text2]))
 
 
 if __name__ == "__main__":

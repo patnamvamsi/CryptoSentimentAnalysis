@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS crawler_control
  (
         handle text,
-        source varchar(100),
+        source varchar(20),
         start_date TIMESTAMPTZ,
         last_update TIMESTAMPTZ,
         priority NUMERIC,
