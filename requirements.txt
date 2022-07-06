@@ -5,3 +5,5 @@ tweepy
 FastAPI
 torch
 sqlalchemy
+uvicorn
+pandas
