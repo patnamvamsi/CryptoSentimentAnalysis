@@ -7,6 +7,4 @@ Provides API interface
   
 Extendable to source content from other sources
 
-Please see below the database schema and relation between various tables
-
-https://dbdiagram.io/d/635cfbcd5170fb6441b9d1c2
+Please see the Wiki for more tech details.
