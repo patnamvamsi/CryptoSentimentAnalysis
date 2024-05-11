@@ -11,7 +11,7 @@ def read_root():
 
 @app.get("/getTweets/{twitter_handle}")
 async def get_tweets(twitter_handle: str):
-    count = get_twitter_data.get_all_user_tweets(twitter_handle)
+    count = get_twitter_data.get_all_user_tweets(twitter_handle,1)
     return (str(count) + " Tweets fetched successfully")
     #http://127.0.0.1:8004/getTweets/OneDevloperArmy
 

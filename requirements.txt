@@ -2,8 +2,8 @@ praw
 transformers
 TensorFlow
 tweepy
-FastAPI
+fastapi~=0.70.0
 torch
-sqlalchemy
+sqlalchemy~=1.4.32
 uvicorn
-pandas
+pandas~=1.3.4
