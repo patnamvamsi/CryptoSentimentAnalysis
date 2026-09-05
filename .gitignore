@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Secrets
+.env
+.env.local
+config/config.py
+*.token
+*.key
+
+# Data and large model weights
+data/
+*.bin
+*.msgpack
+*.h5
+*.pkl
+
+# Logs / cache
+logs/
+*.log
+.cache/
+.pytest_cache/
+
+# Graphify knowledge graph output
+graphify-out/

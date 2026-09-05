@@ -9,6 +9,10 @@ app = FastAPI()
 def read_root():
     return ("Welcome to Crypto Sentiment Analytics")
 
+@app.get("/health")
+def health():
+    return {"status": "healthy", "service": "sentiment_analysis"}
+
 @app.get("/getTweets/{twitter_handle}")
 async def get_tweets(twitter_handle: str):
     count = get_twitter_data.get_all_user_tweets(twitter_handle,1)
